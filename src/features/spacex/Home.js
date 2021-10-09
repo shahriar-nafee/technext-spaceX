@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { fetchHomeData } from "./HomeSlice";
 
 function Home() {
   const dispatch = useDispatch();
+  let history = useHistory();
   const status = useSelector((state) => state.home.status);
   const data = useSelector((state) => state.home.data);
   const [visible, setVisible] = useState(12);
@@ -82,7 +84,12 @@ function Home() {
                           </p>
 
                           <p>{item.launch_date_local}</p>
-                          <button className="btn btn-outline-secondary">
+                          <button
+                            className="btn btn-outline-secondary"
+                            onClick={() => {
+                              history.push(`/detail/${index + 1}`);
+                            }}
+                          >
                             Details
                           </button>
                         </div>
