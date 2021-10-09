@@ -15,19 +15,19 @@ const homeSlice = createSlice({
   name: nameSpace,
   initialState: {
     data: null,
-    loading: null,
+    status: null,
   },
   reducers: {},
   extraReducers: {
     [fetchHomeData.pending]: (state) => {
-      state.loading = "loading";
+      state.status = "loading";
     },
     [fetchHomeData.fulfilled]: (state, { payload }) => {
-      state.loading = "success";
+      state.status = "success";
       state.data = payload;
     },
     [fetchHomeData.rejected]: (state) => {
-      state.loading = "failed";
+      state.status = "failed";
     },
   },
 });
