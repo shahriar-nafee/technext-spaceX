@@ -7,6 +7,7 @@ function Home() {
   const status = useSelector((state) => state.home.status);
   const data = useSelector((state) => state.home.data);
   const [visible, setVisible] = useState(12);
+  const [search, setSearch] = useState("");
 
   const handleLoadButton = () => {
     setVisible(visible + 12);
@@ -20,37 +21,76 @@ function Home() {
     <div className="jumbotron">
       <div className="container">
         {status === "loading" && (
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center mt-5">
             <div className="spinner-border" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
         )}
         {status === "failed" && (
-          <div className="alert alert-danger" role="alert">
+          <div className="alert alert-danger mt-5" role="alert">
             Failed to load data!
           </div>
         )}
+        <div className="col-6">
+          <label className="mr-2">Search:</label>
+          <input
+            style={{ width: "200px" }}
+            type="text"
+            placeholder="search by rocket name"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+        </div>
         <div className="row mt-5">
           {data &&
-            data.slice(0, visible).map((item, index) => (
-              <div className="col-md-3 col-sm-4 mt-3" key={index}>
-                <div className="card">
-                  <img
-                    src={item.links.mission_patch_small}
-                    className="card-img-top"
-                    height="300px"
-                    alt="thumbnail"
-                  />
+            data
+              .filter((item) => {
+                if (search === "") {
+                  return item;
+                } else if (
+                  item.rocket.rocket_name
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .slice(0, visible)
+              .map((item, index) => (
+                <div className="col-md-6 mt-3" key={index}>
                   <div
-                    className="card-footer text-center bg-transparent border-0 overflow-wrap"
-                    style={{ minHeight: "5rem" }}
+                    className="card mb-3 shadow-lg"
+                    style={{ maxWidth: "540px" }}
                   >
-                    <h4 className="card-title ">{item.mission_name}</h4>
+                    <div className="row g-0">
+                      <div className="col-md-4">
+                        <img
+                          src={item.links.mission_patch_small}
+                          className="img-fluid rounded-start"
+                          alt="thumbnail"
+                        />
+                      </div>
+                      <div className="col-md-8">
+                        <div className="card-body ">
+                          <h5 className="card-title">{item.mission_name}</h5>
+
+                          <p>
+                            <strong>Rocket name:</strong>{" "}
+                            {item.rocket.rocket_name}
+                          </p>
+
+                          <p>{item.launch_date_local}</p>
+                          <button className="btn btn-outline-secondary">
+                            Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
         </div>
         <div className="d-grid">
           <button
