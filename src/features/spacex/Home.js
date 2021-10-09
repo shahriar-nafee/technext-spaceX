@@ -8,16 +8,16 @@ function Home() {
   let history = useHistory();
   const status = useSelector((state) => state.home.status);
   const data = useSelector((state) => state.home.data);
-  const [visible, setVisible] = useState(12);
+  const [visible, setVisible] = useState(10);
   const [search, setSearch] = useState("");
 
   const handleLoadButton = () => {
-    setVisible(visible + 12);
+    setVisible(visible + 10);
   };
 
   useEffect(() => {
     dispatch(fetchHomeData());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="jumbotron">
@@ -87,7 +87,7 @@ function Home() {
                           <button
                             className="btn btn-outline-secondary"
                             onClick={() => {
-                              history.push(`/detail/${index + 1}`);
+                              history.push(`/detail/${item.mission_name}`);
                             }}
                           >
                             Details
