@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
+import { changeLaunchStatus } from "./HomeSlice";
 import { useHistory } from "react-router";
 import { fetchHomeData } from "./HomeSlice";
 
@@ -9,6 +10,7 @@ function Home() {
   let history = useHistory();
   const status = useSelector((state) => state.home.status);
   const data = useSelector((state) => state.home.data);
+  const launch_status = useSelector((state) => state.home.launch_status);
   const [visible, setVisible] = useState(10);
   const [search, setSearch] = useState("");
 
@@ -17,8 +19,8 @@ function Home() {
   };
 
   useEffect(() => {
-    dispatch(fetchHomeData());
-  }, [dispatch]);
+    dispatch(fetchHomeData(launch_status));
+  }, [launch_status]);
 
   return (
     <div className="jumbotron">
@@ -36,7 +38,7 @@ function Home() {
           </div>
         )}
         <div className="row d-flex justify-content-center">
-          <div className="col-4 mt-5">
+          <div className="col-5 mt-5">
             <input
               type="text"
               className="form-control"
@@ -46,14 +48,20 @@ function Home() {
               }}
             />
           </div>
-          <div className="col-4 mt-5">
-            <select className="form-select" aria-label="Default select example">
+          <div className="col-5 mt-5">
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) => {
+                dispatch(changeLaunchStatus(e.target.value));
+              }}
+            >
               <option disabled={true} selected>
-                Select by Launch Status
+                Filter by Launch Status
               </option>
-              <option value="1">All </option>
-              <option value="2">Success </option>
-              <option value="3">Failure</option>
+              <option value="">All </option>
+              <option value="true">Success </option>
+              <option value="false">Failure</option>
             </select>
           </div>
         </div>
@@ -74,10 +82,7 @@ function Home() {
               .slice(0, visible)
               .map((item, index) => (
                 <div className="col-md-6 mt-3" key={index}>
-                  <div
-                    className="card mb-3 shadow-lg border-0"
-                    style={{ maxWidth: "540px" }}
-                  >
+                  <div className="card mb-3 shadow-lg border-0">
                     <div className="row g-0">
                       <div className="col-md-4">
                         <img

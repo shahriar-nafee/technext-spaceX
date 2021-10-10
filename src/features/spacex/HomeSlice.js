@@ -5,8 +5,14 @@ const nameSpace = "home";
 
 export const fetchHomeData = createAsyncThunk(
   `${nameSpace}/fetchHomeData`,
-  async () => {
-    const { data } = await axios.get("https://api.spacexdata.com/v3/launches");
+  async (launch_status) => {
+    let url = "https://api.spacexdata.com/v3/launches";
+    if (launch_status !== "") {
+      url += `?launch_success=${launch_status}`;
+      console.log(url);
+    }
+    console.log(url);
+    const { data } = await axios.get(url);
     return data;
   }
 );
@@ -16,8 +22,13 @@ const homeSlice = createSlice({
   initialState: {
     data: null,
     status: null,
+    launch_status: "",
   },
-  reducers: {},
+  reducers: {
+    changeLaunchStatus: (state, action) => {
+      state.launch_status = action.payload;
+    },
+  },
   extraReducers: {
     [fetchHomeData.pending]: (state) => {
       state.status = "loading";
@@ -31,5 +42,7 @@ const homeSlice = createSlice({
     },
   },
 });
+
+export const { changeLaunchStatus } = homeSlice.actions;
 
 export default homeSlice.reducer;
