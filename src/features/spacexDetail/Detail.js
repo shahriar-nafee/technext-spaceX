@@ -39,8 +39,14 @@ function Detail() {
               </Moment>
             </li>
             <li className="list-group-item">
-              <span className="fw-bold  me-2">Launch Successful:</span>
-              <span>{data.launch_success ? "Yes" : "No"}</span>
+              <span className="fw-bold  me-2">Launch Status:</span>
+              <span>
+                {data.launch_success ? (
+                  <span className="text-success fw-bold">Success </span>
+                ) : (
+                  <span className="text-danger fw-bold">Failure </span>
+                )}
+              </span>
             </li>
             {data.details && (
               <li className="list-group-item">
@@ -67,9 +73,11 @@ function Detail() {
             </ul>
           </div>
           <hr />
-          <Link to="/" className="btn btn-secondary mb-4">
-            Back
-          </Link>
+          <div className="text-end">
+            <Link to="/" className="btn btn-secondary mb-4">
+              Back
+            </Link>
+          </div>
         </div>
       )}
     </div>

@@ -35,16 +35,27 @@ function Home() {
             Failed to load data!
           </div>
         )}
-        <div className="col-6">
-          <label className="mr-2">Search:</label>
-          <input
-            style={{ width: "200px" }}
-            type="text"
-            placeholder="search by rocket name"
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-          />
+        <div className="row d-flex justify-content-center">
+          <div className="col-4 mt-5">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="search by rocket name"
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+          </div>
+          <div className="col-4 mt-5">
+            <select className="form-select" aria-label="Default select example">
+              <option disabled={true} selected>
+                Select by Launch Status
+              </option>
+              <option value="1">All </option>
+              <option value="2">Success </option>
+              <option value="3">Failure</option>
+            </select>
+          </div>
         </div>
         <div className="row mt-5">
           {data &&
