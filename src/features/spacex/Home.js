@@ -92,7 +92,7 @@ function Home() {
                           <button
                             className="btn btn-outline-secondary"
                             onClick={() => {
-                              history.push(`/detail/${item.mission_name}`);
+                              history.push(`/detail/${item.flight_number}`);
                             }}
                           >
                             Details
