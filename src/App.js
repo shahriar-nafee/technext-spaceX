@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./features/spacex/Home";
-import Detail from "./features/spacex/Detail";
+import Detail from "./features/spacexDetail/Detail";
 
 function App() {
   return (

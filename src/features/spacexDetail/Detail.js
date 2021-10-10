@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { fetchHomeData } from "./HomeSlice";
+import { fetchHomeData } from "../spacex/HomeSlice";
 
 function Detail() {
   const { id } = useParams();
@@ -36,9 +37,9 @@ function Detail() {
                   </li>
                   <li className="list-group-item">
                     <span className="fw-bold  me-2">Launch Date:</span>
-                    {/* <Moment format="YYYY-MM-DD HH:mm">
-                {launch_date_local}
-              </Moment> */}
+                    <Moment format="YYYY-MM-DD HH:mm">
+                      {item.launch_date_local}
+                    </Moment>
                   </li>
                   <li className="list-group-item">
                     <span className="fw-bold  me-2">Launch Successful:</span>

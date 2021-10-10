@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { fetchHomeData } from "./HomeSlice";
@@ -63,7 +64,7 @@ function Home() {
               .map((item, index) => (
                 <div className="col-md-6 mt-3" key={index}>
                   <div
-                    className="card mb-3 shadow-lg"
+                    className="card mb-3 shadow-lg border-0"
                     style={{ maxWidth: "540px" }}
                   >
                     <div className="row g-0">
@@ -83,7 +84,11 @@ function Home() {
                             {item.rocket.rocket_name}
                           </p>
 
-                          <p>{item.launch_date_local}</p>
+                          <p>
+                            <Moment format="YYYY-MM-DD">
+                              {item.launch_date_local}
+                            </Moment>
+                          </p>
                           <button
                             className="btn btn-outline-secondary"
                             onClick={() => {
